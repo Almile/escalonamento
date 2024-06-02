@@ -8,71 +8,43 @@
 </head>
 <body>
     <div class="notebook">
+
         <h1>Escalonamento de matrizes</h1>
 
-
         <div class="sistema_equacao etapas">
-            <p>Sistema de equações</p>
-            <button onclick="inserirLinha()">+</button>
-            <button onclick="removerLinha()">-</button>
+            <div class="botoes">
+                <button onclick="inserirLinha()">+</button>
+                <button onclick="removerLinha()">-</button>
 
-            <button onclick="calcular()">Calcular</button>
+                <button onclick="calcular()">Calcular</button>
+                <button onclick="limparTodasTabelas()">Limpar</button>
+            </div>
 
             <table id="tabela">
                 <tr>
-                    <td contenteditable="true">3x</td>
-                    <td contenteditable="true">3y</td>
-                    <td contenteditable="true">z</td>
-                    <td contenteditable="true">10</td>
+                    <td contenteditable="true">x</td>
+                    <td contenteditable="true">y</td>
+                    <td contenteditable="true">=</td>
                 </tr>
                 <tr>
                     <td contenteditable="true">x</td>
-                    <td contenteditable="true">-2y</td>
-                    <td contenteditable="true">2z</td>
-                    <td contenteditable="true">2</td>
-                </tr>
-
-                <tr>
-                    <td contenteditable="true">2x</td>
-                    <td contenteditable="true">3y</td>
-                    <td contenteditable="true">z</td>
-                    <td contenteditable="true">8</td>
+                    <td contenteditable="true">y</td>
+                    <td contenteditable="true">=</td>
                 </tr>
             </table>
-       <!--
-
-        <table id="tabela">
-            <tr>
-                <td contenteditable="true">3x</td>
-                <td contenteditable="true">3y</td>
-                <td contenteditable="true">10</td>
-            </tr>
-            <tr>
-                <td contenteditable="true">x</td>
-                <td contenteditable="true">-2y</td>
-                <td contenteditable="true">2</td>
-            </tr>
-
-        </table>
-
-         -->
         </div>
-        <div class="segunda_etapa etapas" id="segunda_etapa">
+        <div class="etapas segunda_etapa" id="segunda_etapa">
 
-        <table id="matriz"></table>
+            <table id="matriz"></table>
 
-        <table id="somaTabelas"></table>
-        <table id="extraTable"></table>
-           <!--
+            <div id="novasTabelas" class="etapas"></div>
 
-    Zerar terceira coluna
-    <table id="terceiraTabela"></table>
+        </div>
 
-    Zerar quarta coluna
-    <table id="quartaTabela"></table>
-         -->
-
-    </div>
+        <div id="resolucaoEquacoes">
+            <h2></h2>
+            
+        </div>
         
     </div>
     <script src="script.js"></script>

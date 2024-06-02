@@ -3,69 +3,135 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+
+    --organic:#6a6f4c;
+    --butter:#cbb69d;
+    --coconut:#ede1d2;
+    --natural: #80604459;
+    --palm-oil:#5d2510;
+    --cocoa: #412f26;
+    --fundo:#eee;
+}
+
+button:hover{
+    background-color: #cbb69d;
+}
+
+button:focus{
+    background-color: #cbb69d;
 }
 
 body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     background-color: #eee;
+    display: flex;
+    justify-content: center;
 }
 
 .notebook {
-    min-width: 80vw;
+    width: 100vw;
     min-height: 100vh;
-    padding: 2em 0 0 8em ;
+    padding: 2em 0 3em 3em ;
     background-color: #fff;
     background-image:
     linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
     linear-gradient(#eee .1em, transparent .1em);
-    background-size: 100% 2em;
-    line-height: 2.1em; /* Ajuste a altura da linha conforme necessário */
+    background-size:115% 1.5em;
+    background-position: right;
+    line-height: 2em; /* Ajuste a altura da linha conforme necessário */
     border: 1px solid #ddd;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h1{
-    color: #ff8867;
+#pivo {
+    background: url("./img/triangle.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
-
-button{
-    padding: 10px;
-    border-radius: 5px;
-    background-color: #ffe3db8b;
-    border: none;
-}
-
-table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-
-
-th, td {
-    padding: 10px;
-    text-align: center;
+#circulo {
+    background: url("./img/oval.png");
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .etapas{
-    margin: 2em;
+    width: 70%;
+    margin: 2em 0 ;
 }
 
-.segunda_etapa{
+h1, h2{
+    color: var(--cocoa);
+    font-size: 24px;
+    width: 90%;
+}
+
+
+.botoes{
     display: flex;
+    gap: 0.2em;
+    width: 100%;
     align-items: center;
-    gap: 3em;
 }
 
-@media only screen and (max-width: 1000px) {
-    body {
-    width: 100wv;
-    }
-    .segunda_etapa{
-        display: block;
-    }
-    table{
-        margin: 2em 0;
+button{
+    padding:1% 3%;
+    border: 1px solid var(--palm-oil);
+    color: var(--cocoa);
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+
+table{
+    border: 1px solid var(--palm-oil);
+    border-radius: 10px;
+    background-color: #fff;
+    width: 100%;
+    margin: 1em 0 3em;
+    font-size: 18px;
+    color: #5d2510;
+}
+
+.segunda_etapa tr td:last-child{
+    border-left: 1px dotted var(--cocoa);
+}
+
+th, td {
+    text-align: center;
+    padding: .3em;
+}
+
+
+#matriz{
+    display: none;
+}
+
+#resolucaoEquacoes{
+    max-width: 80%;
+}
+
+#divEquacao{
+    border-top: 1px solid var(--cocoa);
+    border-bottom: 1px solid var(--cocoa);
+    margin: 10px;
+    padding: 1em;
+    font-size: 16px;
+}
+@media only screen and (min-width: 1000px) {
+    .notebook{
+        width: 70vw;
+        background-size:100% 2em;
+        padding: 2em 0 10em 10em ;
+        line-height: 2em;
     }
 }
