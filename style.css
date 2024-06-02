@@ -64,14 +64,14 @@ body{
 }
 
 .etapas{
-    width: 70%;
+    min-width: 90%;
     margin: 2em 0 ;
 }
 
 h1, h2{
     color: var(--cocoa);
-    font-size: 24px;
-    width: 90%;
+    font-size: 26px;
+    width: 95%;
 }
 
 
@@ -88,7 +88,6 @@ button{
     color: var(--cocoa);
     border-radius: 5px;
     background-color: #fff;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 
@@ -96,8 +95,8 @@ table{
     border: 1px solid var(--palm-oil);
     border-radius: 10px;
     background-color: #fff;
-    width: 100%;
-    margin: 1em 0 3em;
+    min-width: 90%;
+    margin: 1em 0 2em;
     font-size: 18px;
     color: #5d2510;
 }
@@ -117,21 +116,21 @@ th, td {
 }
 
 #resolucaoEquacoes{
-    max-width: 80%;
+    max-width: 90%;
 }
 
-#divEquacao{
+#resolucaoEquacoes div{
     border-top: 1px solid var(--cocoa);
     border-bottom: 1px solid var(--cocoa);
     margin: 10px;
     padding: 1em;
-    font-size: 16px;
+    font-size: 20px;
 }
 @media only screen and (min-width: 1000px) {
     .notebook{
         width: 70vw;
         background-size:100% 2em;
         padding: 2em 0 10em 10em ;
-        line-height: 2em;
+        line-height: 2.3em;
     }
 }
