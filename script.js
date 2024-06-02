@@ -124,9 +124,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
                     const celula = newLine.insertCell();
                     celula.innerText = resultado;
                 }
-            }
-        }
 
+            }
+            tabelaReferencia = novaTabela;
+        }
         renderEquations(tabelaReferencia);
     }
 
@@ -135,10 +136,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const areaDeCriacaoEquacao = document.getElementById("resolucaoEquacoes");
 
         const titulo = document.createElement("h2");
+        var valorLetra = linhas[linhas.length-1].cells[linhas.length-1].innerText;
+
+        if(valorLetra == 0)
+        {
+            titulo.innerText = "Matriz Impossível";
+            areaDeCriacaoEquacao.appendChild(titulo);
+        }
+        else
+        {
+        let numeroLetra;
         titulo.innerText = "Equações";
         areaDeCriacaoEquacao.appendChild(titulo);
 
-        let numeroLetra;
+
         for (let equacao = linhas.length - 1; equacao >= 0; equacao--) {
             const coluna = tabelaReferencia.rows[equacao].cells.length;
             const divEquacao = document.createElement("div");
@@ -157,7 +168,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             divEquacao.appendChild(paragrafo);
             divEquacao.appendChild(paragraf);
             divEquacao.appendChild(paragra);
-
+            
             const divisor = parseFloat(linhas[equacao].cells[equacao].innerText);
             const letters = Array.from(tabela.rows[equacao].cells).map(cell => extractLetters(cell.innerText));
             const texto = letters.map((letter, index) => {
@@ -181,7 +192,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             paragra.innerHTML = `${letters[equacao]} = ${equationResult}`;
         }
     }
-
+    }
     function limparTodasTabelas() {
         window.location.reload();
     }
