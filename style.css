@@ -6,7 +6,7 @@
 
     --organic:#4d88b8;
     --butter:#c3d2e1;
-    --fundo:#ececec;
+    --fundo:#ececec34;
     --natural: #d1929f;
     --palm-oil:#1f3d51;
 }
@@ -32,8 +32,8 @@ body{
     padding: 2em 0 3em 3em ;
     background-color: #fff;
     background-image:
-    linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
-    linear-gradient(#eeeeee4d .1em, transparent .1em);
+    linear-gradient(90deg, transparent 79px, #abced48c 79px, #abced46e 81px, transparent 81px),
+    linear-gradient(#eeeeee25 .1em, transparent .1em);
     background-size:115% 1.5em;
     background-position: right;
     line-height: 2em; /* Ajuste a altura da linha conforme necessário */
