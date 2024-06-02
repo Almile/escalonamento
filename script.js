@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             const paragrafo = document.createElement("p");
             paragrafo.id = "paragrafo" + equacao;
-            paragrafo.style.color = "var(--butter)";
+            paragrafo.style.color = "var(--natural)";
 
             const paragraf = document.createElement("p");
             paragraf.id = "paragraf" + equacao;
