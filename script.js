@@ -76,11 +76,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const matriz = document.getElementById("matriz");
         matriz.innerHTML = "";
         toggleMatrixDisplay(true);
-
+    
+        // Preenche a matriz com os valores da tabela
         for (let i = 0; i < linhas.length; i++) {
             const celulas = linhas[i].getElementsByTagName("td");
             const novaLinha = matriz.insertRow();
-
+    
             for (let j = 0; j < celulas.length; j++) {
                 const valor = celulas[j].innerText.trim();
                 let numero = valor.match(/-?\d+/) ? valor.match(/-?\d+/)[0] : "1";
@@ -92,107 +93,101 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 novaCelula.innerText = numero;
             }
         }
-
+    
         let tabelaReferencia;
         for (let table = 0; table < linhas.length - 1; table++) {
             const novaTabela = document.createElement("table");
             novaTabela.id = "tabela" + table;
             document.getElementById("novasTabelas").appendChild(novaTabela);
-
+    
             tabelaReferencia = table === 0 ? matriz : document.getElementById("tabela" + (table - 1));
             const line = tabelaReferencia.getElementsByTagName("tr");
-
+    
+            // Copiar as linhas de referência
             for (let linhasCopiadas = 0; linhasCopiadas <= table; linhasCopiadas++) {
                 const newLine = novaTabela.insertRow();
-                for (let i = 0; i <= line.length; i++) {
+                for (let i = 0; i < line[linhasCopiadas].cells.length; i++) {
                     const novaCelula = newLine.insertCell();
                     const texto = line[linhasCopiadas].cells[i].innerText;
                     novaCelula.innerText = texto;
                 }
             }
-
+    
+            // Calcular as novas linhas após a operação
             for (let multiplyLine = table + 1; multiplyLine < line.length; multiplyLine++) {
                 const pivo = parseFloat(tabelaReferencia.rows[table].cells[table].innerText.match(/-?\d+/)[0]);
                 const multiplicador = parseFloat(tabelaReferencia.rows[multiplyLine].cells[table].innerText.match(/-?\d+/)[0]);
                 highlightElements(tabelaReferencia.rows[table].cells[table], tabelaReferencia.rows[multiplyLine].cells[table]);
-
+    
                 const newLine = novaTabela.insertRow();
-                for (let j = 0; j <= line.length; j++) {
+                for (let j = 0; j < line[multiplyLine].cells.length; j++) {
                     const linhaPivo = parseFloat(tabelaReferencia.rows[table].cells[j].innerText.match(/-?\d+/)[0]);
                     const linhaMultiplicador = parseFloat(tabelaReferencia.rows[multiplyLine].cells[j].innerText.match(/-?\d+/)[0]);
-                    const resultado = (pivo * linhaMultiplicador) + (-multiplicador * linhaPivo);
+                    const resultado = (pivo * linhaMultiplicador) - (multiplicador * linhaPivo);
                     const celula = newLine.insertCell();
-                    celula.innerText = resultado;
+                    celula.innerText = resultado.toFixed(2);  // Ajuste de precisão
                 }
-
             }
             tabelaReferencia = novaTabela;
         }
         renderEquations(tabelaReferencia);
     }
-
+    
     function renderEquations(tabelaReferencia) {
+        
         const linhas = tabelaReferencia.getElementsByTagName("tr");
         const areaDeCriacaoEquacao = document.getElementById("resolucaoEquacoes");
-
+    
+        areaDeCriacaoEquacao.innerHTML = ""; // Limpa equações anteriores
+    
         const titulo = document.createElement("h2");
-        var valorLetra = linhas[linhas.length-1].cells[linhas.length-1].innerText;
-
-        if(valorLetra == 0)
-        {
-            titulo.innerText = "Matriz Impossível";
-            areaDeCriacaoEquacao.appendChild(titulo);
-        }
-        else
-        {
-        let numeroLetra;
         titulo.innerText = "Equações";
         areaDeCriacaoEquacao.appendChild(titulo);
-
-
+    
+        let valoresEncontrados = {};
+    
+        // Processa as equações de baixo para cima
         for (let equacao = linhas.length - 1; equacao >= 0; equacao--) {
-            const coluna = tabelaReferencia.rows[equacao].cells.length;
+            const letra = Array.from(tabela.rows[equacao].cells).map(cell => extractLetters(cell.innerText));
+            const coluna = linhas[equacao].cells.length;
+            let divisor = parseFloat(linhas[equacao].cells[equacao].innerText);
+            let ultimaColuna = parseFloat(linhas[equacao].cells[coluna - 1].innerText);
+            let termos = [];
+            let somaTermos = 0;
+    
+            // Monta a equação incluindo todas as variáveis
+            for (let j = 0; j < coluna - 1; j++) {
+                let coeficiente = parseFloat(linhas[equacao].cells[j].innerText);
+                let variavel = `${letra[j]}`; // Exemplo: x1, x2, x3...
+    
+                if (j === equacao) {
+                    termos.push(`${coeficiente} ${variavel}`);
+                } else {
+                    let valorEncontrado = valoresEncontrados[variavel] || 0;
+                    somaTermos += coeficiente * valorEncontrado;
+                    termos.push(`${coeficiente} * ${variavel}`);
+                }
+            }
+    
+            const expressao = termos.join(" + ") + ` = ${ultimaColuna}`;
+            const resolucao = `(${ultimaColuna} - ${somaTermos}) / ${divisor}`;
+            const resultado = (ultimaColuna - somaTermos) / divisor;
+    
+            valoresEncontrados[`${letra[equacao]}`] = resultado;
+    
+            // Criação dos elementos na interface
             const divEquacao = document.createElement("div");
-
-            const paragrafo = document.createElement("p");
-            paragrafo.id = "paragrafo" + equacao;
-            paragrafo.style.color = "var(--natural)";
-
-            const paragraf = document.createElement("p");
-            paragraf.id = "paragraf" + equacao;
-
-            const paragra = document.createElement("p");
-            paragra.id = "paragra" + equacao;
-
+            divEquacao.innerHTML = `
+                <p style="color: var(--natural);">${expressao}</p>
+                <p>${resolucao}</p>
+                <p><strong>${letra[equacao]} = ${resultado.toFixed(2)}</strong></p>
+            `;
             areaDeCriacaoEquacao.appendChild(divEquacao);
-            divEquacao.appendChild(paragrafo);
-            divEquacao.appendChild(paragraf);
-            divEquacao.appendChild(paragra);
-            
-            const divisor = parseFloat(linhas[equacao].cells[equacao].innerText);
-            const letters = Array.from(tabela.rows[equacao].cells).map(cell => extractLetters(cell.innerText));
-            const texto = letters.map((letter, index) => {
-                const value = linhas[equacao].cells[index].innerText;
-                return index === letters.length - 1 ? `= ${value} ${letter}` : `${value} ${letter}`;
-            }).join(" ");
-
-            paragrafo.innerHTML = texto;
-
-            const valores = Array.from({ length: coluna - 1 }, (_, index) => {
-                return index !== equacao ? parseFloat(linhas[equacao].cells[index].innerText) : 0;
-            }).filter(value => value !== 0);
-
-            const ultimo = parseFloat(linhas[equacao].cells[coluna - 1].innerText);
-            const sumValores = valores.reduce((acumulador, valorAtual) => acumulador + valorAtual, 0);
-            const equationResult = valores.length > 0 ? (ultimo - (sumValores * numeroLetra)) / divisor : ultimo / divisor;
-            const montarConta = valores.length > 0 ? `${letters[equacao]} = (${ultimo}) - (${sumValores} * ${numeroLetra}) / ${divisor}` : `${letters[equacao]} = (${ultimo}) / ${divisor}`;
-
-            numeroLetra = equationResult;
-            paragraf.innerHTML = montarConta;
-            paragra.innerHTML = `${letters[equacao]} = ${equationResult}`;
         }
     }
-    }
+    
+    
+    
     function limparTodasTabelas() {
         window.location.reload();
     }
